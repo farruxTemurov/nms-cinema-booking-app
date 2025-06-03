@@ -3,6 +3,7 @@ package com.controller;
 import com.model.Theater;
 import com.service.TheaterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class TheaterController {
 	private TheaterService theaterService;
 
 	// Add a new theater (e.g., by Admin)
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping
 	public Theater addTheater(@RequestBody Theater theater) {
 		return theaterService.addTheater(theater);
