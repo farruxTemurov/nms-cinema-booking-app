@@ -1,0 +1,20 @@
+<nav class="navbar">
+  <div class="navbar-left">
+    <a routerLink="/" class="app-title">NMS Cinemas</a>
+  </div>
+
+  <div class="navbar-right">
+    <ng-container *ngIf="!isLoggedIn; else loggedInTemplate">
+      <a routerLink="/login">Login</a>
+      <a routerLink="/register">Register</a>
+    </ng-container>
+
+    <ng-template #loggedInTemplate>
+      <ng-container *ngIf="isAdmin">
+        <a routerLink="/add-movie">Add Movies</a>
+        <a routerLink="/add-theater">Add Theaters</a>
+      </ng-container>
+      <a (click)="logout()" style="cursor: pointer;">Logout</a>
+    </ng-template>
+  </div>
+</nav>
