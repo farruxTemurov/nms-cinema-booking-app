@@ -9,5 +9,5 @@ public interface BookingService {
 
 	List<Booking> getBookingsByUserEmail(String userEmail);
 
-	List<Booking> getAllBookings(); // for admin
+	List<Booking> getAllBookings(); // for admin only
 }
