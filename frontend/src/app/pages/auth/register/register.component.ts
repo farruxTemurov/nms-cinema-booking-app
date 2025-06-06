@@ -22,19 +22,17 @@ export class RegisterComponent {
       password: this.password
     };
 
-    this.http.post('http://localhost:9090/api/auth/register', payload, { responseType: 'text' }).subscribe({
+    this.http.post<any>('http://localhost:9090/api/auth/register', payload).subscribe({
       next: (response) => {
-        this.successMessage = response;
+        this.successMessage = response.message;
         this.errorMessage = '';
-        this.fullName = '';
-        this.email = '';
-        this.password = '';
       },
       error: (err) => {
         this.successMessage = '';
-        this.errorMessage = err.error || 'Something went wrong. Please try again.';
+        this.errorMessage = err.error.message || 'Something went wrong. Please try again.';
       }
     });
+
   }
 }
 
