@@ -1,1 +1,72 @@
-<p>register works!</p>
+<div class="container-centered mt-5">
+  <div class="card">
+    <h2 class="mb-4 text-center">Register</h2>
+
+   <form (ngSubmit)="register()" #registerForm="ngForm" novalidate class="d-flex flex-column gap-3">
+
+  <div>
+    <input
+      type="text"
+      class="form-control w-100 py-2 px-3"
+      name="fullName"
+      [(ngModel)]="fullName"
+      #fullNameRef="ngModel"
+      placeholder="Full Name"
+      required
+    />
+    <div *ngIf="fullNameRef.invalid && (fullNameRef.dirty || fullNameRef.touched)" class="alert-danger small mt-1">
+      Full Name is required.
+    </div>
+  </div>
+
+  <div>
+    <input
+      type="email"
+      class="form-control w-100 py-2 px-3"
+      name="email"
+      [(ngModel)]="email"
+      #emailRef="ngModel"
+      placeholder="Email"
+      required
+      email
+    />
+    <div *ngIf="emailRef.invalid && (emailRef.dirty || emailRef.touched)" class="alert-danger small mt-1">
+      <div *ngIf="emailRef.errors?.['required']">Email is required.</div>
+      <div *ngIf="emailRef.errors?.['email']">Enter a valid email.</div>
+    </div>
+  </div>
+
+  <div>
+    <input
+      type="password"
+      class="form-control w-100 py-2 px-3"
+      name="password"
+      [(ngModel)]="password"
+      #passwordRef="ngModel"
+      placeholder="Password"
+      required
+      minlength="6"
+    />
+    <div *ngIf="passwordRef.invalid && (passwordRef.dirty || passwordRef.touched)" class="alert-danger small mt-1">
+      <div *ngIf="passwordRef.errors?.['required']">Password is required.</div>
+      <div *ngIf="passwordRef.errors?.['minlength']">Password must be at least 6 characters.</div>
+    </div>
+  </div>
+
+  <button class="btn btn-primary w-100 py-2 fw-bold" type="submit" [disabled]="registerForm.invalid">
+    Register
+  </button>
+</form>
+    <div *ngIf="successMessage" class="alert alert-success mt-3">
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+      {{ errorMessage }}
+    </div>
+
+    <div class="align-right mt-3">
+      <span class="text-muted">Already a user? </span>
+      <a routerLink="/login" class="login-link">Login instead!</a>
+    </div>
+  </div>
+</div>

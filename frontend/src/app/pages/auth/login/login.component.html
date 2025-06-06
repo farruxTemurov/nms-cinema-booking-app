@@ -1,1 +1,58 @@
-<p>login works!</p>
+<div class="container-centered mt-5">
+  <div class="card">
+    <h2 class="mb-4 text-center">Login</h2>
+
+    <form (ngSubmit)="login()" #loginForm="ngForm" novalidate class="d-flex flex-column gap-3">
+
+      <div>
+        <input
+          type="email"
+          class="form-control w-100 py-2 px-3"
+          name="email"
+          [(ngModel)]="email"
+          #emailRef="ngModel"
+          placeholder="Email"
+          required
+          email
+        />
+        <div *ngIf="emailRef.invalid && (emailRef.dirty || emailRef.touched)" class="alert-danger small mt-1">
+          <div *ngIf="emailRef.errors?.['required']">Email is required.</div>
+          <div *ngIf="emailRef.errors?.['email']">Enter a valid email.</div>
+        </div>
+      </div>
+
+      <div>
+        <input
+          type="password"
+          class="form-control w-100 py-2 px-3"
+          name="password"
+          [(ngModel)]="password"
+          #passwordRef="ngModel"
+          placeholder="Password"
+          required
+          minlength="6"
+        />
+        <div *ngIf="passwordRef.invalid && (passwordRef.dirty || passwordRef.touched)" class="alert-danger small mt-1">
+          <div *ngIf="passwordRef.errors?.['required']">Password is required.</div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary w-100 py-2 fw-bold" type="submit" [disabled]="loginForm.invalid">
+        Login
+      </button>
+    </form>
+
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="token" class="alert alert-success mt-3">
+      Login successful! Token received.
+    </div>
+
+    <div class="align-right mt-3">
+      <span class="text-muted">Don't have an account? </span>
+      <a routerLink="/register" class="login-link">Register here!</a>
+    </div>
+  </div>
+</div>
