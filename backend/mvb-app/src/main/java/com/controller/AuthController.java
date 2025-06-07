@@ -53,13 +53,16 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getEmail(),
+                            loginRequest.getPassword()
+                    )
+            );
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            // Use the authenticated principal to generate token, not raw email string
-            String username = authentication.getName();
-            String token = tokenProvider.generateToken(username);
+            // ✅ Pass full authentication to include roles
+            String token = tokenProvider.generateToken(authentication);
 
             return ResponseEntity.ok(new JwtAuthenticationResponse(token));
         } catch (BadCredentialsException ex) {
@@ -71,4 +74,5 @@ public class AuthController {
                     .body(Map.of("message", "Login failed due to server error"));
         }
     }
+
 }

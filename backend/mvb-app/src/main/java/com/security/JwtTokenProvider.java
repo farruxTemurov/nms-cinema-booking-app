@@ -35,8 +35,25 @@ public class JwtTokenProvider {
 
     public String generateToken(Authentication authentication) {
         String username = authentication.getName();
-        return generateToken(username);
+
+        // Extract roles
+        var authorities = authentication.getAuthorities()
+                .stream()
+                .map(role -> role.getAuthority())
+                .toList();
+
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
+
+        return Jwts.builder()
+                .setSubject(username)
+                .claim("roles", authorities)  // ✅ Add roles here
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
+                .signWith(key, SignatureAlgorithm.HS512)
+                .compact();
     }
+
 
     public String generateToken(String email) {
         Date now = new Date();

@@ -2,6 +2,7 @@ package com.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -38,10 +39,15 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
-                // Public access to theater & movie listings
-                .requestMatchers("/api/theaters").permitAll()
-                .requestMatchers("/api/movies").permitAll()
-                // Restrict everything else
+
+                // ✅ Allow public GET access to theaters and movies
+                .requestMatchers(HttpMethod.GET, "/api/theaters").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/movies").permitAll()
+
+                // ✅ Only ADMIN can add movies (POST)
+                .requestMatchers(HttpMethod.POST, "/api/movies").hasRole("ADMIN")
+
+                // 🔒 Require authentication for everything else
                 .anyRequest().authenticated()
             )
             .exceptionHandling(ex -> ex.authenticationEntryPoint(unauthorizedHandler))
@@ -54,7 +60,7 @@ public class SecurityConfig {
     public CorsFilter corsFilter() {
         var source = new UrlBasedCorsConfigurationSource();
         var config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:4200")); // Adjust if needed
+        config.setAllowedOrigins(List.of("http://localhost:4200")); // Frontend origin
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
