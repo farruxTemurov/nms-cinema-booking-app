@@ -1,4 +1,4 @@
-<div class="container-centered">
+<div class="container-centered movie-management-container">
   <h2 class="mb-4 text-center">🎬 Movies List</h2>
 
   <div *ngIf="errorMessage" class="alert alert-danger text-center">
@@ -9,75 +9,53 @@
     No movies available.
   </div>
 
-  <table *ngIf="movies.length > 0" class="table table-custom-dark table-bordered text-center mt-3">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Language</th>
-        <th>Genre</th>
-        <th>Rating</th>
-        <th>Theater</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let movie of movies">
-        <td>{{ movie.title }}</td>
-        <td>{{ movie.language }}</td>
-        <td>{{ movie.genre }}</td>
-        <td>{{ movie.rating }}</td>
-        <td>{{ movie.theater?.name || 'N/A' }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-and-form-wrapper">
+    <!-- Movies Table -->
+    <div class="movies-table">
+      <table *ngIf="movies.length > 0" class="table table-custom-dark table-bordered text-center mt-3">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Language</th>
+            <th>Genre</th>
+            <th>Rating</th>
+            <th>Theater</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let movie of movies">
+            <td>{{ movie.title }}</td>
+            <td>{{ movie.language }}</td>
+            <td>{{ movie.genre }}</td>
+            <td>{{ movie.rating }}</td>
+            <td>{{ movie.theater?.name || 'N/A' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-  <!-- Add Movie Form (admin only) -->
-  <div *ngIf="isAdmin" class="mt-5 card p-4">
-    <h3 class="mb-3 text-center">➕ Add New Movie</h3>
-    <form (ngSubmit)="addMovie()" #movieForm="ngForm" novalidate>
-      <div class="mb-3">
-        <input 
-          type="text" 
-          class="form-control" 
-          placeholder="Title" 
-          name="title" 
-          [(ngModel)]="newMovie.title" 
-          required />
-      </div>
-      <div class="mb-3">
-        <input 
-          type="text" 
-          class="form-control" 
-          placeholder="Language" 
-          name="language" 
-          [(ngModel)]="newMovie.language" 
-          required />
-      </div>
-      <div class="mb-3">
-        <input 
-          type="text" 
-          class="form-control" 
-          placeholder="Genre" 
-          name="genre" 
-          [(ngModel)]="newMovie.genre" 
-          required />
-      </div>
-      <div class="mb-3">
-        <input 
-          type="number" 
-          class="form-control" 
-          placeholder="Rating (0 - 10)" 
-          name="rating" 
-          [(ngModel)]="newMovie.rating" 
-          min="0" max="10" step="0.1" 
-          required />
-      </div>
-      <button class="btn btn-primary w-100" type="submit" [disabled]="movieForm.invalid">
-        Add Movie
-      </button>
-    </form>
+    <!-- Add Movie Form -->
+    <div *ngIf="isAdmin" class="add-movie-form card">
+      <h3 class="mb-3 text-center">➕ Add New Movie</h3>
+      <form (ngSubmit)="addMovie()" #movieForm="ngForm" novalidate>
+        <div class="mb-3">
+          <input type="text" class="form-control wide-input" placeholder="Title" name="title" [(ngModel)]="newMovie.title" required />
+        </div>
+        <div class="mb-3">
+          <input type="text" class="form-control wide-input" placeholder="Language" name="language" [(ngModel)]="newMovie.language" required />
+        </div>
+        <div class="mb-3">
+          <input type="text" class="form-control wide-input" placeholder="Genre" name="genre" [(ngModel)]="newMovie.genre" required />
+        </div>
+        <div class="mb-3">
+          <input type="number" class="form-control wide-input" placeholder="Rating (0 - 10)" name="rating" [(ngModel)]="newMovie.rating" min="0" max="10" step="0.1" required />
+        </div>
+        <button class="btn btn-primary wide-btn" type="submit" [disabled]="movieForm.invalid">Add Movie</button>
+      </form>
 
-    <div *ngIf="addMovieError" class="alert alert-danger mt-3 text-center">
-      {{ addMovieError }}
+      <div *ngIf="addMovieError" class="alert alert-danger mt-3 text-center">
+        {{ addMovieError }}
+      </div>
     </div>
   </div>
 </div>

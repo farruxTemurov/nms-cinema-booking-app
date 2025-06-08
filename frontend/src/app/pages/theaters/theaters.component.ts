@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service'; // ✅ Import AuthService
 
 interface Theater {
   id?: number;
@@ -17,11 +18,17 @@ export class TheatersComponent implements OnInit {
   newTheater: Theater = { name: '', location: '' };
   successMessage = '';
   errorMessage = '';
+  isAdmin = false; // ✅ Add admin flag
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService // ✅ Inject AuthService
+  ) {}
 
   ngOnInit() {
     this.fetchTheaters();
+    this.isAdmin = this.authService.isAdmin(); // ✅ Check role
+    console.log('Admin check for Add Theater form:', this.isAdmin);
   }
 
   fetchTheaters() {
@@ -36,7 +43,7 @@ export class TheatersComponent implements OnInit {
   }
 
   addTheater() {
-    const token = localStorage.getItem('token'); // Adjust if you store token differently
+    const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     this.http.post<Theater>('http://localhost:9090/api/theaters', this.newTheater, { headers }).subscribe({

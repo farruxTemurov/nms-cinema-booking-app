@@ -1,1 +1,32 @@
-<p>theaters works!</p>
+<div class="container">
+
+  <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <!-- Theater List -->
+  <h2>Available Theaters</h2>
+  <ul class="list-group">
+    <li *ngFor="let theater of theaters" class="list-group-item">
+      <strong>{{ theater.name }}</strong> – {{ theater.location }}
+    </li>
+  </ul>
+
+  <!-- Add Theater Form -->
+  <div *ngIf="isAdmin" class="add-theater-form">
+    <h3 class="mb-3 text-center">Add New Theater</h3>
+    <form (submit)="addTheater(); $event.preventDefault()">
+      <div class="form-group">
+        <input type="text" id="name" [(ngModel)]="newTheater.name" name="name" class="form-control theater-input"
+          placeholder="Theater Name" required />
+      </div>
+
+      <div class="form-group">
+        <input type="text" id="location" [(ngModel)]="newTheater.location" name="location"
+          class="form-control theater-input" placeholder="Location" required />
+      </div>
+
+      <button type="submit" class="btn btn-primary theater-btn">Add Theater</button>
+    </form>
+  </div>
+
+</div>

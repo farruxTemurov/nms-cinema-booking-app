@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import {jwtDecode} from 'jwt-decode';  // make sure you import jwt-decode like this
+import { jwtDecode } from 'jwt-decode';  // make sure you import jwt-decode like this
 import { JwtAuthenticationResponse } from '../models/jwt-authentication-response';
 
 const BASE_URL = 'http://localhost:9090/api/auth';
@@ -63,8 +63,12 @@ export class AuthService {
 
     try {
       const decoded: any = jwtDecode(token);
+      console.log('Decoded JWT:', decoded);
       const roles = decoded.roles || decoded.authorities || [];
-      return roles.includes('ROLE_ADMIN');
+      console.log('Roles found:', roles);
+      return Array.isArray(roles)
+        ? roles.includes('ROLE_ADMIN') || roles.some((r: any) => r.authority === 'ROLE_ADMIN')
+        : false;
     } catch {
       return false;
     }

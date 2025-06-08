@@ -31,6 +31,7 @@ export class MoviesComponent implements OnInit {
   ngOnInit(): void {
     this.loadMovies();
     this.isAdmin = this.authService.isAdmin(); // ← Real role check from token
+     console.log('Admin check for Add Movie form:', this.isAdmin);
   }
 
   loadMovies(): void {

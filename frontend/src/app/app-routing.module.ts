@@ -12,6 +12,11 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent }, // Register page
   { path: 'movies', component: MoviesComponent },
   { path: 'theaters', component: TheatersComponent },
+  { path: 'add-movie', component: MoviesComponent },
+  { path: 'add-theater', component: TheatersComponent },
+
+  // Wildcard fallback
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
