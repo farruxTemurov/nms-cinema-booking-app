@@ -1,0 +1,46 @@
+.home-hero {
+    padding: 3rem 1rem;
+    background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+    margin: 2rem auto;
+    max-width: 900px;
+    animation: fadeInUp 1s ease-out;
+}
+
+.home-hero:hover {
+    background: linear-gradient(135deg, #2c2c2c, #1f1f1f);
+    box-shadow: 0 0 40px rgba(255, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.home-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ff3c3c;
+    text-shadow: 0 0 8px #b81d24;
+    margin-bottom: 1rem;
+}
+
+.home-hero p {
+    font-size: 1.25rem;
+    color: #cccccc;
+    margin: 0;
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.1);
+}
+
+.text-center {
+    text-align: center;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
