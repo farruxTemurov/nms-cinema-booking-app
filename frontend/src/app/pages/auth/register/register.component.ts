@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +15,7 @@ export class RegisterComponent {
   successMessage = '';
   errorMessage = '';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) { }
 
   register() {
     const payload = {
@@ -24,12 +26,12 @@ export class RegisterComponent {
 
     this.http.post<any>('http://localhost:9090/api/auth/register', payload).subscribe({
       next: (response) => {
-        this.successMessage = response.message;
-        this.errorMessage = '';
+        this.toastr.success(response.message, 'Registration Successful');
+        this.router.navigate(['/login']);
       },
       error: (err) => {
         this.successMessage = '';
-        this.errorMessage = err.error.message || 'Something went wrong. Please try again.';
+        this.toastr.error(err.error.message || 'Something went wrong. Please try again.', 'Registration Failed');
       }
     });
 
