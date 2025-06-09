@@ -10,10 +10,21 @@
     </ng-container>
 
     <ng-template #loggedInTemplate>
+      <!-- 🧑‍🎓 Regular user view -->
+      <ng-container *ngIf="!isAdmin">
+        <a routerLink="/movies">Movies</a>
+        <a routerLink="/theaters">Theaters</a>
+        <a routerLink="/bookings">My Bookings</a>
+      </ng-container>
+
+      <!-- 👨‍💼 Admin view -->
       <ng-container *ngIf="isAdmin">
         <a routerLink="/add-movie">Add Movies</a>
         <a routerLink="/add-theater">Add Theaters</a>
+        <a routerLink="/bookings">All Bookings</a>
       </ng-container>
+
+      <!-- 🔓 Common for both -->
       <a (click)="logout()" style="cursor: pointer;">Logout</a>
     </ng-template>
   </div>
