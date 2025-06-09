@@ -1,5 +1,6 @@
 package com.service.impl;
 
+import com.dto.MovieRequest;
 import com.model.Movie;
 import com.model.Theater;
 import com.repository.MovieRepository;
@@ -16,23 +17,24 @@ public class MovieServiceImpl implements MovieService {
 	@Autowired
 	private MovieRepository movieRepository;
 
-//	@Override
-//	public Movie addMovie(Movie movie) {
-//		return movieRepository.save(movie);
-//	}
 	@Autowired
 	private TheaterRepository theaterRepository;
-
+	
 	@Override
-	public Movie addMovie(Movie movie) {
-	    Long theaterId = movie.getTheater().getId();
-	    Theater theater = theaterRepository.findById(theaterId)
-	            .orElseThrow(() -> new RuntimeException("Theater not found with ID: " + theaterId));
-	    
-	    movie.setTheater(theater); // attach full entity
+	public Movie addMovie(MovieRequest movieRequest) {
+	    Theater theater = theaterRepository.findById(movieRequest.getTheaterId())
+	        .orElseThrow(() -> new RuntimeException("Theater not found"));
+
+	    Movie movie = Movie.builder()
+	        .title(movieRequest.getTitle())
+	        .language(movieRequest.getLanguage())
+	        .genre(movieRequest.getGenre())
+	        .rating(movieRequest.getRating())
+	        .theater(theater)
+	        .build();
+
 	    return movieRepository.save(movie);
 	}
-
 
 	@Override
 	public List<Movie> getAllMovies() {

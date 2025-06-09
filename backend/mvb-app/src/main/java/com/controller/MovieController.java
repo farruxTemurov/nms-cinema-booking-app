@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.dto.MovieRequest;
 import com.model.Movie;
 import com.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,12 @@ public class MovieController {
     private MovieService movieService;
 
     // Endpoint to add a new movie (e.g., by Admin)
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public Movie addMovie(@RequestBody Movie movie) {
-        return movieService.addMovie(movie);
+    @PreAuthorize("hasRole('ADMIN')")
+    public Movie addMovie(@RequestBody MovieRequest movieRequest) {
+        return movieService.addMovie(movieRequest);
     }
+
 
     // Endpoint to get all movies (for listing/showing)
     @GetMapping
