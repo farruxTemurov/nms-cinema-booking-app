@@ -33,7 +33,20 @@ public class BookingController {
 	@GetMapping("/my")
 	@PreAuthorize("hasRole('CUSTOMER')")
 	public ResponseEntity<List<Booking>> getUserBookings(Principal principal) {
-		return ResponseEntity.ok(bookingService.getBookingsByUserEmail(principal.getName()));
+		System.out.println("🔐 Principal object: " + principal);
+
+		if (principal == null) {
+			System.out.println("❌ Principal is null. Token might be missing or invalid.");
+			return ResponseEntity.status(401).build(); // Unauthorized
+		}
+
+		String email = principal.getName();
+		System.out.println("📧 Email from Principal: " + email);
+
+		List<Booking> bookings = bookingService.getBookingsByUserEmail(email);
+		System.out.println("📦 Bookings fetched for user " + email + ": " + bookings.size());
+
+		return ResponseEntity.ok(bookings);
 	}
 
 	// ✅ Admin-only: Get all bookings
