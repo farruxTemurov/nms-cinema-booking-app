@@ -1,1 +1,79 @@
-<p>bookings works!</p>
+<div class="container p-4">
+  <div class="card booking-card">
+
+    <!-- Show form + my bookings only if NOT admin -->
+    <ng-container *ngIf="!isAdmin">
+      <h3 class="form-title">Book a Movie</h3>
+      <form (ngSubmit)="onSubmit()" class="booking-form-vertical">
+        <div class="form-group">
+          <label for="movieId">Movie ID</label>
+          <input id="movieId" type="number" [(ngModel)]="request.movieId" name="movieId" required />
+        </div>
+
+        <div class="form-group">
+          <label for="theaterId">Theater ID</label>
+          <input id="theaterId" type="number" [(ngModel)]="request.theaterId" name="theaterId" required />
+        </div>
+
+        <div class="form-group">
+          <label for="bookingTime">Booking Time</label>
+          <input id="bookingTime" type="datetime-local" [(ngModel)]="request.bookingTime" name="bookingTime" required />
+        </div>
+
+        <button class="btn btn-primary submit-btn" type="submit">Submit</button>
+      </form>
+
+      <hr>
+
+      <h4>My Bookings</h4>
+      <div class="table-responsive">
+        <table class="table table-striped booking-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Movie</th>
+              <th>Theater</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let b of myBookings">
+              <td>{{ b.id }}</td>
+              <td>{{ b.movie.title }}</td>
+              <td>{{ b.theater.name }}</td>
+              <td>{{ b.bookingTime }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+
+    <!-- Show all bookings only if admin -->
+    <div *ngIf="isAdmin" class="admin-bookings">
+      <h4>All Bookings (Admin)</h4>
+      <div class="table-responsive">
+        <table class="table table-bordered booking-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>User</th>
+              <th>Movie</th>
+              <th>Theater</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let b of allBookings">
+              <td>{{ b.id }}</td>
+              <td>{{ b.user.email }}</td>
+              <td>{{ b.movie.title }}</td>
+              <td>{{ b.theater.name }}</td>
+              <td>{{ b.bookingTime }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>

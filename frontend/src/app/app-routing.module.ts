@@ -5,6 +5,7 @@ import { RegisterComponent } from './pages/auth/register/register.component';
 import { HomeComponent } from './pages/home/home.component';
 import { MoviesComponent } from './pages/movies/movies.component';
 import { TheatersComponent } from './pages/theaters/theaters.component';
+import { BookingsComponent } from './pages/bookings/bookings.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },           // Default route
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'theaters', component: TheatersComponent },
   { path: 'add-movie', component: MoviesComponent },
   { path: 'add-theater', component: TheatersComponent },
+  { path: 'bookings', component: BookingsComponent },
 
   // Wildcard fallback
   { path: '**', redirectTo: '' }
