@@ -9,7 +9,6 @@ import { LoginComponent } from './pages/auth/login/login.component';
 import { RegisterComponent } from './pages/auth/register/register.component';
 import { MoviesComponent } from './pages/movies/movies.component';
 import { BookingsComponent } from './pages/bookings/bookings.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import { TheatersComponent } from './pages/theaters/theaters.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -25,7 +24,6 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     RegisterComponent,
     MoviesComponent,
     BookingsComponent,
-    DashboardComponent,
     AdminComponent,
     TheatersComponent,
     HomeComponent,
