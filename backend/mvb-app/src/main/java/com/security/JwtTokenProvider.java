@@ -40,7 +40,10 @@ public class JwtTokenProvider {
 
         var authorities = authentication.getAuthorities()
                 .stream()
-                .map(role -> role.getAuthority())
+                .map(role -> {
+                    String authority = role.getAuthority();
+                    return authority.startsWith("ROLE_") ? authority : "ROLE_" + authority;
+                })
                 .toList();
 
         Date now = new Date();
