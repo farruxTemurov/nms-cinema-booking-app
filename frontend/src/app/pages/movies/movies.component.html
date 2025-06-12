@@ -28,7 +28,9 @@
             <td>{{ movie.language }}</td>
             <td>{{ movie.genre }}</td>
             <td>{{ movie.rating }}</td>
-            <td>{{ movie.theater?.name || 'N/A' }}</td>
+            <td>
+              {{ movie.theater?.name || 'N/A' }}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -39,22 +41,39 @@
       <h3 class="mb-3 text-center">➕ Add New Movie</h3>
       <form (ngSubmit)="addMovie()" #movieForm="ngForm" novalidate>
         <div class="mb-3">
-          <input type="text" class="form-control wide-input" placeholder="Title" name="title" [(ngModel)]="newMovie.title" required />
+          <input type="text" class="form-control wide-input" placeholder="Title" name="title"
+            [(ngModel)]="newMovie.title" required />
         </div>
         <div class="mb-3">
-          <input type="text" class="form-control wide-input" placeholder="Language" name="language" [(ngModel)]="newMovie.language" required />
+          <input type="text" class="form-control wide-input" placeholder="Language" name="language"
+            [(ngModel)]="newMovie.language" required />
         </div>
         <div class="mb-3">
-          <input type="text" class="form-control wide-input" placeholder="Genre" name="genre" [(ngModel)]="newMovie.genre" required />
+          <input type="text" class="form-control wide-input" placeholder="Genre" name="genre"
+            [(ngModel)]="newMovie.genre" required />
         </div>
         <div class="mb-3">
-          <input type="number" class="form-control wide-input" placeholder="Rating (0 - 10)" name="rating" [(ngModel)]="newMovie.rating" min="0" max="10" step="0.1" required />
+          <input type="number" class="form-control wide-input" placeholder="Rating (0 - 10)" name="rating"
+            [(ngModel)]="newMovie.rating" min="0" max="10" step="0.1" required />
         </div>
-        <button class="btn btn-primary wide-btn" type="submit" [disabled]="movieForm.invalid">Add Movie</button>
+        <!-- Theater dropdown -->
+        <div class="mb-3">
+          <select [(ngModel)]="newMovie.theater" name="theater" required>
+            <option *ngFor="let theater of theaters" [ngValue]="theater">
+              {{ theater.name }}
+            </option>
+          </select>
+        </div>
+        <button class="btn btn-primary wide-btn" type="submit" [disabled]="movieForm.invalid">
+          Add Movie
+        </button>
       </form>
 
       <div *ngIf="addMovieError" class="alert alert-danger mt-3 text-center">
         {{ addMovieError }}
+      </div>
+      <div *ngIf="successMessage" class="alert alert-success mt-3 text-center">
+        {{ successMessage }}
       </div>
     </div>
   </div>
