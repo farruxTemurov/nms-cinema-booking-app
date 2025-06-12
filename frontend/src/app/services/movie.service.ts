@@ -8,7 +8,7 @@ const BASE_URL = 'http://localhost:9090/api/movies';
 @Injectable({
   providedIn: 'root'
 })
-export class MovieService { 
+export class MovieService {
 
   constructor(private http: HttpClient) { }
 
