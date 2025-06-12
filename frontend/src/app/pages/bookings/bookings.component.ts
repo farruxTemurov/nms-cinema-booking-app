@@ -5,6 +5,11 @@ import { BookingRequest } from 'src/app/models/booking-request.model';
 import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
 
+import { MovieService } from 'src/app/services/movie.service';
+import { TheaterService } from 'src/app/services/theater.service';
+import { Movie } from 'src/app/models/movie.model';
+import { Theater } from 'src/app/models/theater.model';
+
 @Component({
   selector: 'app-bookings',
   templateUrl: './bookings.component.html',
@@ -19,19 +24,39 @@ export class BookingsComponent implements OnInit {
 
   myBookings: Booking[] = [];
   allBookings: Booking[] = [];
+  movies: Movie[] = [];
+  theaters: Theater[] = [];
+
   isAdmin: boolean = false;
 
-  constructor(private bookingService: BookingService, private toastr: ToastrService) {}
+  constructor(
+    private bookingService: BookingService,
+    private movieService: MovieService,
+    private theaterService: TheaterService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
+    this.loadMoviesAndTheaters();
     this.checkAdminAndLoadAllBookings();
+  }
+
+  loadMoviesAndTheaters(): void {
+    this.movieService.getAllMovies().subscribe({
+      next: (data) => this.movies = data,
+      error: () => this.toastr.error('Failed to load movies.')
+    });
+
+    this.theaterService.getAllTheaters().subscribe({
+      next: (data) => this.theaters = data,
+      error: () => this.toastr.error('Failed to load theaters.')
+    });
   }
 
   onSubmit(): void {
     this.bookingService.bookMovie(this.request).subscribe({
       next: () => {
         this.toastr.success('Booking successful!');
-        // Reload bookings based on role
         if (this.isAdmin) {
           this.loadAllBookings();
         } else {
@@ -67,7 +92,6 @@ export class BookingsComponent implements OnInit {
       },
       error: (err: HttpErrorResponse) => {
         if (err.status === 403 || err.status === 401) {
-          // User not admin, load user bookings instead
           this.isAdmin = false;
           this.loadMyBookings();
         } else {
