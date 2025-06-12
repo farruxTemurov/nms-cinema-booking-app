@@ -45,7 +45,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/movies").permitAll()
 
                 // ✅ Only ADMIN can add movies (POST)
-                .requestMatchers(HttpMethod.POST, "/api/movies").hasRole("ADMIN")
+//                .requestMatchers(HttpMethod.POST, "/api/movies").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/movies").permitAll()
 
                 // 🔒 Require authentication for everything else
                 .anyRequest().authenticated()
