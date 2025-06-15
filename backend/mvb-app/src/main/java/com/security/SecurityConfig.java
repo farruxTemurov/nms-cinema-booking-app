@@ -61,13 +61,14 @@ public class SecurityConfig {
     public CorsFilter corsFilter() {
         var source = new UrlBasedCorsConfigurationSource();
         var config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:4200")); // Frontend origin
+        config.setAllowedOrigins(List.of("http://174.129.136.109", "http://localhost:4200")); // <-- add your real frontend URL here
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
+
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
