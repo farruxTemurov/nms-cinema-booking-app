@@ -29,7 +29,6 @@ export class LoginComponent {
           this.authService.saveToken(res.accessToken);
           this.errorMessage = '';
           console.log('Login successful. Token saved:', res.accessToken);
-          // TODO: Redirect user or update UI here
         } else if ((res as any).message) {
           this.errorMessage = (res as any).message;
           this.token = '';
