@@ -21,7 +21,7 @@ public class BookingController {
 	@Autowired
 	private BookingService bookingService;
 
-	// ✅ Book movie using authenticated user's identity
+	// Book movie using authenticated user's identity
 	@PostMapping
 	@PreAuthorize("hasRole('CUSTOMER')")
 	public ResponseEntity<Booking> bookMovie(@Valid @RequestBody BookingRequest request, Principal principal) {
