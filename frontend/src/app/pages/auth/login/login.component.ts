@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { JwtAuthenticationResponse } from 'src/app/models/jwt-authentication-response'; // adjust path
+import { JwtAuthenticationResponse } from 'src/app/models/jwt-authentication-response'; 
 
 @Component({
   selector: 'app-login',
