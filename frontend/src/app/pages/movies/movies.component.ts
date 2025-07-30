@@ -77,7 +77,7 @@ export class MoviesComponent implements OnInit {
       theater: { id: this.newMovie.theater.id } as Theater
     };
 
-    // ✅ Let the interceptor handle the token, no manual headers
+    // Let the interceptor handle the token, no manual headers
     this.movieService.addMovie(movieToAdd).subscribe({
       next: (addedMovie) => {
         this.movies.push(addedMovie);
