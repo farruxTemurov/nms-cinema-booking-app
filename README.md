@@ -56,22 +56,22 @@ ng serve
 **Here are some screenshots of the application:**
 
 ![Homepage](assets/homepage.jpg)  
-*Caption: The homepage of the application.*
+**The homepage of the application.**
 
 ---
 
 ![Product Page](assets/movie-details.jpg)  
-*Caption: The detailed view of the selected movie.*
+**Available movies.**
 
 ---
 
 ![Cart](assets/booking.jpg)  
-*Caption:  Book a movie with a time and place that suits you.*
+**Book a movie with a time and place that suits you.**
 
 ---
 
 ![Orders](assets/admin-dashboard.jpg)  
-*Caption: Admin view to manage bookings.*
+**Admin view to manage bookings.**
 
 
 ## Contributing
